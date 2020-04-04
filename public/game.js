@@ -63,7 +63,7 @@ export default function createGame() {
 
 
     function addFruit(command) {
-        const fruitId = comand ? command.fruitId : Math.floor(Math.random() * 100000);
+        const fruitId = command ? command.fruitId : Math.floor(Math.random() * 10000000);
         const fruitX = command ? command.fruitX : Math.floor(Math.random() * state.screen.width);
         const fruitY = command ? command.fruitY : Math.floor(Math.random() * state.screen.height);
 
@@ -153,6 +153,7 @@ export default function createGame() {
         movePlayer,
         state,
         setState,
-        subscribe
+        subscribe,
+        start
     };
 };
