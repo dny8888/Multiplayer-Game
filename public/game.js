@@ -10,6 +10,12 @@ export default function createGame() {
 
     const observers = [];
 
+    function start() {
+        const frequency = 2000;
+
+        setInterval(addFruit, frequency)
+    };
+
     function subscribe(observerFunction) {
         observers.push(observerFunction)
     };
@@ -57,19 +63,31 @@ export default function createGame() {
 
 
     function addFruit(command) {
-        const fruitId = command.fruitId;
-        const fruitX = command.fruitX;
-        const fruitY = command.fruitY;
+        const fruitId = comand ? command.fruitId : Math.floor(Math.random() * 100000);
+        const fruitX = command ? command.fruitX : Math.floor(Math.random() * state.screen.width);
+        const fruitY = command ? command.fruitY : Math.floor(Math.random() * state.screen.height);
 
         state.fruits[fruitId] = {
             x: fruitX,
             y: fruitY
         }
+        notifyAll({
+            type: 'addFruit',
+            fruitId,
+            fruitX,
+            fruitY
+        });
+
     };
     function removeFruit(command) {
         const fruitId = command.fruitId;
 
         delete state.fruits[fruitId];
+
+        notifyAll({
+            type: 'addFruit',
+            fruitId,
+        });
     };
 
     function movePlayer(command) {
@@ -78,31 +96,23 @@ export default function createGame() {
 
         const acceptedMoves = {
             ArrowUp(player) {
-                //console.log('game.movePlayer().ArrowUp() => Moving player up')
                 if (player.y - 1 >= 0) {
                     player.y = player.y - 1;
-                    console.log(`Y=${player.y}`);
                 };
             },
             ArrowDown(player) {
-                //console.log('game.movePlayer().ArrowDown() => Moving player Down')
                 if (player.y + 1 < state.screen.height) {
                     player.y = player.y + 1;
-                    console.log(`Y=${player.y}`);
                 }
             },
             ArrowLeft(player) {
-                //console.log('game.movePlayer().ArrowLeft() => Moving player Left')
                 if (player.x - 1 >= 0) {
                     player.x = player.x - 1;
-                    console.log(`X=${player.x}`);
                 }
             },
             ArrowRight(player) {
-                //console.log('game.movePlayer().ArrowRight() => Moving player Right')
                 if (player.x + 1 < state.screen.width) {
                     player.x = player.x + 1;
-                    console.log(`X=${player.x}`);
                 }
             },
         };

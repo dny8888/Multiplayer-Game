@@ -25,7 +25,6 @@ sockets.on('connection', (socket) => {
     console.log(game.state);
 
     socket.emit('setup', game.state);
-    console.log(game.state);
 
     socket.on('disconnect', () => {
         game.removePlayer({ playerId });
@@ -41,6 +40,6 @@ sockets.on('connection', (socket) => {
 })
 
 
-server.listen(3000, () => {
+server.listen(3000, '192.168.1.9', () => {
     console.log(`> Server listening on port: 3000`)
 })

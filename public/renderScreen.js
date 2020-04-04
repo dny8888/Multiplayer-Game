@@ -1,4 +1,4 @@
-export default function renderScreen(screen, game, requestAnimationFrame) {
+export default function renderScreen(screen, game, requestAnimationFrame, currentPlayerId) {
     const context = screen.getContext('2d');
 
     const tamRect = 1;
@@ -14,7 +14,15 @@ export default function renderScreen(screen, game, requestAnimationFrame) {
         context.fillStyle = 'red';
         context.fillRect(fruit.x, fruit.y, tamRect, tamRect);
     }
+
+    const currentPlayer = game.state.players[currentPlayerId];
+
+    if (currentPlayer) {
+        context.fillStyle = '#f0db4f';
+        context.fillRect(currentPlayer.x, currentPlayer.y, tamRect, tamRect)
+    };
+
     requestAnimationFrame(() => {
-        renderScreen(screen, game, requestAnimationFrame)
+        renderScreen(screen, game, requestAnimationFrame, currentPlayerId)
     });
 };

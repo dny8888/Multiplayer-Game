@@ -26,6 +26,7 @@ export default function createKeyboardListener(document) {
         const playerId = state.playerId;
 
         const command = {
+            type: 'movePlayer',
             playerId,
             keyPressed
         }
